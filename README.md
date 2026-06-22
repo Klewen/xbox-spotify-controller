@@ -1,4 +1,4 @@
-# Spotify Controller
+# Spotify Controller for Xbox on Windows
 
 Turn your game controller into a compact media remote for Windows.
 
