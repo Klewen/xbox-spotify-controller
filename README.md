@@ -2,16 +2,21 @@
 
 Control Windows media with a game controller D-pad. It is designed for Spotify,
 but its media controls work with any app that responds to Windows media keys.
+The compact desktop window lets you select the controller button combinations;
+closing it keeps the app running in the Windows system tray.
 
 ## Controls
 
 | Controller input | Action |
 | --- | --- |
-| Hold `LB` + D-pad Left | Previous track |
-| Hold `LB` + D-pad Right | Next track |
-| Hold `LB` + D-pad Up | Increase Windows master volume by 5% |
-| Hold `LB` + D-pad Down | Decrease Windows master volume by 5% |
-| Hold `LB` + `A` | Play / pause |
+| Hold the activation button + D-pad Left | Previous track |
+| Hold the activation button + D-pad Right | Next track |
+| Hold the activation button + D-pad Up | Increase Windows master volume |
+| Hold the activation button + D-pad Down | Decrease Windows master volume |
+| Hold the activation button + selected button | Play / pause |
+
+The default mapping is `LB` as the activation button and `A` for play/pause.
+Both buttons and the volume step can be changed in the app.
 
 ## Requirements
 
@@ -34,8 +39,8 @@ Open Spotify, connect your controller, then run:
 py spotify_controller.py
 ```
 
-Keep the terminal open while using the controller. Press `Ctrl+C` to stop the
-program.
+Close the window to keep the app running in the system tray. Right-click its
+tray icon and choose **Quit** when you want to stop it.
 
 > The volume controls adjust the Windows master volume. Track controls are sent
 > to the active Windows media session, so they control Spotify while it is
