@@ -17,9 +17,14 @@ from pycaw.pycaw import AudioUtilities
 VOLUME_STEP = 0.05  # 5% per press
 POLL_DELAY = 0.02
 
+# Default Xbox controller mapping. These will become configurable in the UI.
+ACTIVATION_BUTTON = 4  # Left bumper (LB)
+PLAY_PAUSE_BUTTON = 0  # A
+
 # Windows virtual-key codes
 VK_MEDIA_NEXT_TRACK = 0xB0
 VK_MEDIA_PREV_TRACK = 0xB1
+VK_MEDIA_PLAY_PAUSE = 0xB3
 KEYEVENTF_KEYUP = 0x0002
 
 
@@ -54,6 +59,11 @@ def direction_from_joystick(joystick: pygame.joystick.Joystick) -> tuple[int, in
     return 0, 0
 
 
+def is_button_pressed(joystick: pygame.joystick.Joystick, button: int) -> bool:
+    """Safely return the state of a controller button."""
+    return button < joystick.get_numbuttons() and bool(joystick.get_button(button))
+
+
 def run() -> None:
     pygame.init()
     pygame.joystick.init()
@@ -64,18 +74,21 @@ def run() -> None:
     joystick = pygame.joystick.Joystick(0)
     joystick.init()
     endpoint = get_volume_endpoint()
-    previous_direction = (0, 0)
+    previous_active_direction = (0, 0)
+    previous_play_pause_active = False
 
     print(f"Connected controller: {joystick.get_name()}")
-    print("Left/Right: change track | Up/Down: volume | Press Ctrl+C to exit")
+    print("Hold LB + D-pad: media controls | Hold LB + A: play/pause")
+    print("Press Ctrl+C to exit")
 
     try:
         while True:
             pygame.event.pump()
-            direction = direction_from_joystick(joystick)
+            activation_pressed = is_button_pressed(joystick, ACTIVATION_BUTTON)
+            direction = direction_from_joystick(joystick) if activation_pressed else (0, 0)
 
             # One action for each new D-pad press, rather than repeat on hold.
-            if direction != previous_direction:
+            if direction != previous_active_direction:
                 x, y = direction
                 if x == -1:
                     send_media_key(VK_MEDIA_PREV_TRACK)
@@ -88,7 +101,15 @@ def run() -> None:
                 elif y == -1:
                     change_volume(endpoint, -VOLUME_STEP)
 
-            previous_direction = direction
+            play_pause_active = activation_pressed and is_button_pressed(
+                joystick, PLAY_PAUSE_BUTTON
+            )
+            if play_pause_active and not previous_play_pause_active:
+                send_media_key(VK_MEDIA_PLAY_PAUSE)
+                print("Play/Pause")
+
+            previous_active_direction = direction
+            previous_play_pause_active = play_pause_active
             time.sleep(POLL_DELAY)
     except KeyboardInterrupt:
         print("\nStopped.")

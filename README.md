@@ -5,19 +5,20 @@ but its media controls work with any app that responds to Windows media keys.
 
 ## Controls
 
-| D-pad | Action |
+| Controller input | Action |
 | --- | --- |
-| Left | Previous track |
-| Right | Next track |
-| Up | Increase Windows master volume by 5% |
-| Down | Decrease Windows master volume by 5% |
+| Hold `LB` + D-pad Left | Previous track |
+| Hold `LB` + D-pad Right | Next track |
+| Hold `LB` + D-pad Up | Increase Windows master volume by 5% |
+| Hold `LB` + D-pad Down | Decrease Windows master volume by 5% |
+| Hold `LB` + `A` | Play / pause |
 
 ## Requirements
 
 - Windows
 - Python 3.10 or newer
-- A controller recognised by Windows (Xbox controllers are supported; other
-  controllers may work when their D-pad is exposed normally)
+- An Xbox controller recognised by Windows (the default button mapping is for
+  Xbox controllers)
 
 ## Installation
 
