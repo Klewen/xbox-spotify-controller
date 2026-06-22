@@ -24,8 +24,7 @@ controller button, use the D-pad, and carry on.
 
 ## Interface
 
-<!-- Add the captured application image here before publishing:
-![Spotify Controller settings window](docs/screenshot.png) -->
+![Spotify Controller settings window](docs/sc_screenshot.png)
 
 The compact settings window shows the connected-controller status and lets you
 adjust the controls without editing code.
